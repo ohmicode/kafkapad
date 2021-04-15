@@ -1,0 +1,19 @@
+version: '3'
+
+networks:
+  default:
+    driver: bridge
+
+services:
+  kafka-pad:
+    build: .
+    ports:
+      - '8181:8181'
+      - '5005:5005'
+    environment:
+      WEB_PREFIX: /kafka
+      DEFAULT_KAFKA_SERVERS: 10.15.76.11:9092,10.15.76.12:9092,10.15.76.13:9092
+      DEFAULT_KAFKA_SASL_CONFIG: org.apache.kafka.common.security.scram.ScramLoginModule required username="%s" password="%s";
+      KAFKA_CLIENT_TIMEOUT: 2000
+      SERVER_PORT: 8181
+    restart: unless-stopped
